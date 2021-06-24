@@ -1,0 +1,13 @@
+{
+	"title": "Covid: Sortie de crise",
+	"description": "Ces prochaines semaines, Le Temps veut proposer un journalisme positif et sérieux sur des initiatives crédibles. Le but: dépasser le constat d’un problème pour écrire sur les moyens qui peuvent lui être apportés.",
+	"imgSocial": "img/article/header-social.jpg",
+	"navBarStyle": "black",
+	"navBarOffset": "0",
+	"navBarLocked": false,
+	"pubDate": "2020-07-23T11:00:00+00:00",
+	"partner": {
+		"logo": "img/empty.png",
+		"link": "https://www.letemps.ch/"
+	}
+}

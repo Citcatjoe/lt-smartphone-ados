@@ -1,0 +1,429 @@
+{% use '_blocks.html.twig' %}
+
+<!DOCTYPE HTML>
+
+<html>
+<head>
+
+	<script id="slide-template" type="text/x-handlebars-template">
+		{% verbatim %}
+			{{#each slide}}
+				<div class="swiper-slide {{#if hasBigTitle}}title{{/if}}" id="slide{{@index}}">
+
+						{{!--------------------------}}
+						{{!-- GESTION DU TEXTE ICI --}}
+						{{!--------------------------}}
+
+						{{#if hasEpTitle}}
+							<span class="txt-episode">{{hasEpTitle}}</span>
+						{{/if}}
+
+						{{#if hasBigTitle}}
+							<h1>{{hasBigTitle}}</h1>
+						{{/if}}
+
+						{{#if hasBigTitle}}
+							  <span class="ca3-scroll-down-link ca3-scroll-down-arrow" data-ca3_iconfont="ETmodules" data-ca3_icon=""></span>
+						{{/if}}
+
+						{{#if hasChapterNo}}
+							<span class="txt-chapter">{{hasChapterNo}}</span>
+						{{/if}}
+
+						{{#if hasChapterTitle}}
+							<h2>{{hasChapterTitle}}</h2>
+						{{/if}}
+
+						{{#if hasText}}
+					    	<div class="text-container">
+					    		<span>{{{hasText}}}</span>
+					    	</div>
+				    	{{/if}}
+
+	  					
+						{{!---------------------------------------}}
+						{{!-- TEST SI SLIDER PUIS TYPE DE MEDIA --}}
+						{{!---------------------------------------}}
+						
+				    	{{#if isHSlider}}
+					    	<div class="swiper-container swipper-nina-horizontal1">
+					            <div class="swiper-wrapper">
+					              	{{#each hSliderChildren}}
+						            <div class="swiper-slide" style="background: url('img/{{this.img}}')">
+						            	<div class="text-container">
+								    		<span>{{this.text}}</span>
+								    	</div>
+						            </div>
+						            {{/each}}
+					            </div>
+					            <div class="swiper-pagination"></div>
+					        </div>
+
+				        {{else}}
+
+					        <figure {{#if hasGradient}}class="gradient"{{/if}} {{#if hasImgBg}}style="background: url('img/{{hasImgBg}}'); background-position: center center; background-size: cover; background-repeat: no-repeat;{{#if imgContained}}background-size: contain;{{/if}}"{{/if}}>
+				    			{{#if isVideo}} 
+					    		<video class="video-js vjs-theme-fantasy" muted playsinline {{#if autoplay}}autoplay{{/if}} {{#if loop}}loop{{/if}} preload="metadata" data-setup="{}">
+			    					<source src="{{source}}" />
+			    					<p class="vjs-no-js">
+			      						To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+			      					</p>
+			  					</video> 
+			  					{{/if}}
+			  					{{#if hasQuote}}
+		  						<blockquote>{{hasQuote}}<span>{{quoteAuth}}</span></blockquote>
+		  						{{/if}}
+		  					</figure>
+
+		  					{{#if controls}}
+					    		<div class="controls">
+					    			<span class="btn btn-sound">SOUN</span>
+					    			<span class="btn btn-reset">REST</span>
+					    		</div>
+					    	{{/if}}
+
+				        {{/if}}
+	  					
+  						
+				    	{{!--------------------}}
+						{{!-- OVERLAY OU NON --}}
+						{{!--------------------}}
+
+				    	{{#if overlay}}
+				    	<div class="overlay"></div>
+				    	{{/if}}
+
+
+				    	{{!---------------------------------}}
+						{{!-- SLIDE DE CREDITS EN DUR ICI --}}
+						{{!---------------------------------}}
+
+				    	{{#if isCredits}}
+				    	<h1> credits</h1>
+				    	{{/if}}
+			    	
+			    </div>
+			{{/each}}
+		{% endverbatim %}
+	</script>
+
+	{{ block('head_brand') }}
+	
+	<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.css" />
+	
+	<link rel="stylesheet" type="text/css" href="css/main.css" />
+
+	<link href="https://unpkg.com/video.js@7/dist/video-js.min.css" rel="stylesheet">
+	<link href="https://unpkg.com/@videojs/themes@1/dist/fantasy/index.css" rel="stylesheet">
+
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond&family=Just+Another+Hand&family=Open+Sans&family=Playfair+Display:ital@0;1&display=swap" rel="stylesheet">
+	{# <link rel="stylesheet" type="text/css" href="css/loader.css" /> #}
+	{# <link rel="stylesheet" type="text/css" href="css/owl.carousel.css" /> #}
+	{# <link rel="stylesheet" type="text/css" href="css/owl.theme.css" /> #}
+	{# <link href='https://fonts.googleapis.com/css?family=Merriweather:400,900,400italic' rel='stylesheet' type='text/css'> #}
+	{# <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,700' rel='stylesheet' type='text/css'> #}
+	<!--<link href="https://fonts.googleapis.com/css?family=Oswald:400,700" rel="stylesheet">-->
+	{# <link href="https://fonts.googleapis.com/css?family=Poppins:400,700i,900i" rel="stylesheet"> #}
+	{# <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700" rel="stylesheet"> #}
+	{# <script src="https://www.youtube.com/iframe_api"></script> #}
+	<script>var players = [];</script>
+
+</head>
+<body style="padding-top: {{ navBarOffset }};">
+	{{ block('bar_brand') }}
+
+	<header></header>
+
+
+	
+	{# <aside>
+		
+		
+	</aside> #}
+
+	<main>
+		<!-- Slider main container -->			
+		<div class="swiper-container swiper-main">
+		  <!-- Additional required wrapper -->
+			  <div class="swiper-wrapper">
+
+			  
+
+			    {# <div class="swiper-slide" id="slide0">
+			    	<figure>
+			    		<video class="video-js vjs-theme-fantasy" muted playsinline autoplay preload="metadata" data-setup="{}">
+	    					<source src="https://player.vimeo.com/external/559844997.sd.mp4?s=a8e2c9e7364920cd96537ff344885d7fe6214eb7&profile_id=164" />
+	    					<p class="vjs-no-js">
+	      						To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+	      					</p>
+	  					</video>
+			    	</figure>
+			    	<div class="overlay"></div>
+			    	<div class="text-container">
+			    		<span>Nina 12 ans, collégienne, fan de chevaux, joue avec ses copines</span>
+			    	</div>
+			    </div>
+
+			  	<div class="swiper-slide" id="slide1">
+			    	<figure>
+			    		<video class="video-js vjs-theme-fantasy" muted playsinline preload="metadata" data-setup="{}">
+	    					<source src="https://player.vimeo.com/external/559844885.sd.mp4?s=5b93967d16736c7800272fc12937879b2ef543c4&profile_id=164" type="video/mp4" />
+	    					<p class="vjs-no-js">
+	      						To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+	      					</p>
+	  					</video>
+			    	</figure>
+			    	<div class="text-container text-bottom">
+			    		<span>nina-amitie-tiktok</span>
+			    	</div>
+			    	<div class="controls">sound</div>
+			    </div> #}
+
+			    {# <div class="swiper-slide" id="slide2">
+			    	<div class="swiper-container swipper-nina-horizontal1">
+			            <div class="swiper-wrapper">
+			              <div class="swiper-slide" style="background: url('img/placeholder.jpg')"> Slide 1</div>
+			              <div class="swiper-slide" style="background: url('img/placeholder.jpg')">Vertical Slide 2</div>
+			              <div class="swiper-slide" style="background: url('img/placeholder.jpg')">Vertical Slide 3</div>
+			              <div class="swiper-slide" style="background: url('img/placeholder.jpg')">Vertical Slide 4</div>
+			              <div class="swiper-slide" style="background: url('img/placeholder.jpg')">Vertical Slide 5</div>
+			            </div>
+			            <div class="swiper-pagination"></div>
+			        </div>
+			    </div>
+
+			    <div class="swiper-slide" id="slide3">
+			    	<figure>
+			    		<video class="video-js vjs-theme-fantasy" muted playsinline preload="metadata" data-setup="{}">
+	    					<source src="https://player.vimeo.com/external/559844537.sd.mp4?s=bfaea2d66b65a8d86fb38008a5c9ab420b3f51f5&profile_id=164" />
+	    					<p class="vjs-no-js">
+	      						To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+	      					</p>
+	  					</video>
+			    	</figure>
+			    	<div class="text-container text-bottom">
+			    		<span>nina-amitie</span>
+			    	</div>
+			    	<div class="controls">sound</div>
+			    </div>
+
+			    <div class="swiper-slide" id="slide4">
+			    	<figure>
+			    		<video class="video-js vjs-theme-fantasy" muted playsinline preload="metadata" data-setup="{}">
+	    					<source src="https://player.vimeo.com/external/559844498.sd.mp4?s=83a82e9a56f29233a482861427895c2c3befaff0&profile_id=164" />
+	    					<p class="vjs-no-js">
+	      						To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+	      					</p>
+	  					</video>
+			    	</figure>
+			    	<div class="text-container text-bottom">
+			    		<span>nina-copines</span>
+			    	</div>
+			    	<div class="controls">sound</div>
+			    </div>
+
+			    <div class="swiper-slide" id="slide5">
+			    	<figure>
+			    		<video class="video-js vjs-theme-fantasy" muted playsinline preload="metadata" data-setup="{}">
+	    					<source src="https://player.vimeo.com/external/559844399.sd.mp4?s=49bce8ec98a6a049fc5a1a9ae563aa89d344ee4f&profile_id=164">
+	      						To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+	      					</p>
+	  					</video>
+			    	</figure>
+			    	<div class="text-container text-bottom">
+			    		<span>nina-vocaux</span>
+			    	</div>
+			    	<div class="controls">sound</div>
+			    </div>
+
+			    <div class="swiper-slide" id="slide6">
+			    	<figure>
+			    		<img src="img/placeholder.jpg">
+			    	</figure>
+			    	<div class="overlay"></div>
+			    	<div class="text-container">
+			    		<span>6.1_SEQ_VOCAUX</span>
+			    	</div>
+			    </div>
+
+			    <div class="swiper-slide" id="slide7">
+			    	<figure>
+			    		<img src="img/nina-cousin.jpg">
+			    	</figure>
+			    	<div class="text-container">
+			    		<span>L'AMOUR</span>
+			    	</div>
+			    </div>
+
+			    <div class="swiper-slide" id="slide8">
+			    	<figure>
+			    		<video class="video-js vjs-theme-fantasy" muted playsinline preload="metadata" data-setup="{}">
+	    					<source src="https://player.vimeo.com/external/559844300.sd.mp4?s=70cc9f946edb35d7d28b138deda82c0bfd4cc493&profile_id=164">
+	      						To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+	      					</p>
+	  					</video>
+			    	</figure>
+			    	<div class="text-container text-bottom">
+			    		<span>nina-amour intro</span>
+			    	</div>
+			    	<div class="controls">sound</div>
+			    </div>
+
+			    <div class="swiper-slide" id="slide9">
+			    	<figure>
+			    		<img src="img/nina-amour-cousin.jpg">
+			    	</figure>
+			    </div>
+
+			    <div class="swiper-slide" id="slide10">
+			    	<figure>
+			    		<video class="video-js vjs-theme-fantasy" muted playsinline preload="metadata" data-setup="{}">
+	    					<source src="https://player.vimeo.com/external/559844125.sd.mp4?s=95b0824ef04ee59a09e58366efa567bcaabd40c3&profile_id=164">
+	      						To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+	      					</p>
+	  					</video>
+			    	</figure>
+			    	<div class="text-container text-bottom">
+			    		<span>nina-amour-suite</span>
+			    	</div>
+			    	<div class="controls">sound</div>
+			    </div>
+
+			    <div class="swiper-slide" id="slide11">
+			    	<figure>
+			    		<video class="video-js vjs-theme-fantasy" muted playsinline preload="metadata" data-setup="{}">
+	    					<source src="https://player.vimeo.com/external/559844023.sd.mp4?s=983312747bd5106a8f0d2d81a1a7a9ac217e25bb&profile_id=164">
+	      						To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+	      					</p>
+	  					</video>
+			    	</figure>
+			    	<div class="text-container text-bottom">
+			    		<span>nina-lena-situation-nb</span>
+			    	</div>
+			    	<div class="controls">sound</div>
+			    </div>
+
+			    <div class="swiper-slide" id="slide12">
+			    	<div class="swiper-container swipper-nina-horizontal2">
+			            <div class="swiper-wrapper">
+			              <div class="swiper-slide" style="background: url('img/placeholder.jpg')"> Slide 1</div>
+			              <div class="swiper-slide" style="background: url('img/placeholder.jpg')">Vertical Slide 2</div>
+			              <div class="swiper-slide" style="background: url('img/placeholder.jpg')">Vertical Slide 3</div>
+			              <div class="swiper-slide" style="background: url('img/placeholder.jpg')">Vertical Slide 4</div>
+			              <div class="swiper-slide" style="background: url('img/placeholder.jpg')">Vertical Slide 5</div>
+			            </div>
+			            <div class="swiper-pagination"></div>
+			        </div>
+			    </div>
+
+			    <div class="swiper-slide" id="slide13">
+			    	<figure>
+			    		<video class="video-js vjs-theme-fantasy" muted playsinline preload="metadata" data-setup="{}">
+	    					<source src="https://player.vimeo.com/external/559843880.sd.mp4?s=3ffae248fa82273ba1e7269e6e12c8f0587cb437&profile_id=164">
+	      						To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+	      					</p>
+	  					</video>
+			    	</figure>
+			    	<div class="text-container text-bottom">
+			    		<span>nina-routine</span>
+			    	</div>
+			    	<div class="controls">sound</div>
+			    </div>
+
+			    <div class="swiper-slide" id="slide14">
+			    	<figure>
+			    		<img src="img/placeholder.jpg">
+			    	</figure>
+			    	<div class="text-container">
+			    		<span>WHATSAPP MAMAN</span>
+			    	</div>
+			    </div>
+
+			    <div class="swiper-slide" id="slide15">
+			    	<figure>
+			    		<video class="video-js vjs-theme-fantasy" muted playsinline preload="metadata" data-setup="{}">
+	    					<source src="https://player.vimeo.com/external/559843645.sd.mp4?s=ea560bc157905aa31b6d9de19aa5b6b67287c0c5&profile_id=164">
+	      						To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+	      					</p>
+	  					</video>
+			    	</figure>
+			    	<div class="text-container text-bottom">
+			    		<span>nina-parents</span>
+			    	</div>
+			    	<div class="controls">sound</div>
+			    </div>
+
+			    <div class="swiper-slide" id="slide16">
+			    	<figure>
+			    		<img src="img/placeholder.jpg">
+			    	</figure>
+			    	<div class="text-container">
+			    		<span>SELFIE FAMILLE</span>
+			    	</div>
+			    </div>
+			    
+			    <div class="swiper-slide" id="slide17">
+			    	<figure>
+			    		<img src="img/placeholder.jpg">
+			    	</figure>
+			    	<div class="text-container">
+			    		<span>END, CREDIT, AUTRES</span>
+			    	</div>
+			    </div>
+ #}
+			    
+
+			    
+
+
+			</div>
+		  <!-- If we need pagination -->
+		  <div class="swiper-pagination"></div>
+
+		  <!-- If we need navigation buttons -->
+		  <div class="swiper-button-prev"></div>
+		  <div class="swiper-button-next"></div>
+
+		  <!-- If we need scrollbar -->
+		  <div class="swiper-scrollbar"></div>
+		</div>
+	</main>
+
+
+
+
+
+
+
+
+{{ block('contrib_bloc') }}
+
+
+<footer>
+	
+</footer>
+
+{{ block('footer_brand') }}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
+{# <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.17.0/TweenMax.min.js"></script> #}
+{# <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/ScrollMagic.js"></script> #}
+{# <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/plugins/animation.gsap.js"></script> #}
+{# <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/plugins/debug.addIndicators.js"></script> #}
+{# <script src="js/jquery.lazyload.js?v=1.9.7"></script> #}
+{# <script src="js/intro-control.js"></script> #}
+<script src="js/handlebars-v4.7.7.js"></script>
+<script src="js/viewport.js"></script>
+<!--<script src="js/timeline-control.js"></script>-->
+<script src="https://unpkg.com/swiper/swiper-bundle.js"></script>
+<script src="https://vjs.zencdn.net/7.11.4/video.min.js"></script>
+<script src="js/main.js"></script>
+{# <script src="js/main2.js"></script> #}
+{# <script src="https://unpkg.com/scrollreveal/dist/scrollreveal.min.js"></script> #}
+
+		
+
+	
+</body>
+</html>
