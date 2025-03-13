@@ -117,7 +117,7 @@ body
      width:100%;
      position: relative;
      scroll-snap-type: y mandatory;
-     
+     overflow:hidden;
 
      @include breakpoint(sm) {
         scroll-padding: 40px;

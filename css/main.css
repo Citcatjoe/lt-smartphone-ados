@@ -40,7 +40,8 @@ body {
   /*height: 100vh;*/
   width: 100%;
   position: relative;
-  scroll-snap-type: y mandatory; }
+  scroll-snap-type: y mandatory;
+  overflow: hidden; }
   @media (max-width: 768px) {
     body {
       scroll-padding: 40px; } }
